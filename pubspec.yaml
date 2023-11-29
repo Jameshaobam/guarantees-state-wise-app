@@ -44,6 +44,11 @@ dependencies:
   font_awesome_flutter: ^10.6.0
   get: ^4.6.5
 
+  syncfusion_flutter_charts: ^23.2.6
+  fl_chart: ^0.65.0
+
+  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
