@@ -11,7 +11,7 @@ class DetailData extends StatefulWidget {
 class _DetailDataState extends State<DetailData> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: Scaffold(
         body: Text("This is detail data"),
       ),

@@ -14,7 +14,7 @@ class _ModalGraphState extends State<ModalGraph> {
       width: double.infinity,
       child: Container(
         width: double.infinity,
-        child: Column(
+        child: const Column(
           children: [
             Text("data"),
             Text("data"),
