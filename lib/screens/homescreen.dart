@@ -124,7 +124,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             isDismissible: false,
                             context: context,
                             builder: (context) {
-                              return ModalGraph();
+                              List<Guarantee> dataPassed = [];
+                              for (Guarantee ele in dataList) {
+                                if (ele.statesUts == "Total") {
+                                  continue;
+                                } else {
+                                  dataPassed.add(ele);
+                                }
+                              }
+                              return ModalGraph(
+                                chartData: dataPassed,
+                              );
                             },
                           );
                         },
