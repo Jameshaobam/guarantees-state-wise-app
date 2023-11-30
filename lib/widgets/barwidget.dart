@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:data_visual_cubeten/controller/get_main_controller.dart';
+import 'package:data_visual_cubeten/widgets/modalgraph.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -17,6 +20,27 @@ class barChartWidget extends StatelessWidget {
     List<Guarantee> dataList = _mainController.dataList.value;
     return Obx(
       () => SfCartesianChart(
+        onAxisLabelTapped: (AxisLabelTapArgs ax) {
+          log("${ax.axisName}");
+          log("${ax.value}");
+          log("${ax.text}");
+
+          int index = ax.value.toInt();
+          print(dataList[index]);
+
+          print(index);
+          showModalBottomSheet(
+            isScrollControlled: true,
+            isDismissible: false,
+            context: context,
+            builder: (context) {
+              return ModalGraph(
+                index: index,
+                guaranteeList: dataList,
+              );
+            },
+          );
+        },
         tooltipBehavior: _tooltipBehavior,
         series: <ChartSeries>[
           // ColumnSeries<Guarantee, String>(
@@ -28,15 +52,20 @@ class barChartWidget extends StatelessWidget {
           //     yValueMapper: (Guarantee gt, _) => gt
           //         .amountOfCumulativeSinceInceptionIn2000Till28022023),
           BarSeries<Guarantee, String>(
-              name: "Number of cumulative",
-              spacing: 0.2,
-              dataLabelSettings: DataLabelSettings(
-                  isVisible: _mainController.seeNum.value,
-                  textStyle: TextStyle(fontSize: 7)),
-              dataSource: dataList,
-              xValueMapper: (Guarantee gt, _) => gt.statesUts,
-              yValueMapper: (Guarantee gt, _) =>
-                  gt.numberOfCumulativeSinceInceptionIn2000Till28022023),
+            name: "Number of cumulative",
+            spacing: 0.2,
+            dataLabelSettings: DataLabelSettings(
+              isVisible: _mainController.seeNum.value,
+              textStyle: TextStyle(fontSize: 7),
+            ),
+            dataSource: dataList,
+            xValueMapper: (Guarantee gt, _) => gt.statesUts,
+            yValueMapper: (Guarantee gt, _) =>
+                gt.numberOfCumulativeSinceInceptionIn2000Till28022023,
+            // onPointTap: (ChartPointDetails pt) {
+            //   log("${pt.pointIndex}");
+            // },
+          ),
           BarSeries<Guarantee, String>(
               name: "Amount of cumulative",
               dataLabelSettings: DataLabelSettings(
