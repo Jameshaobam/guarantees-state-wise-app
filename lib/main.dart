@@ -1,3 +1,4 @@
+import 'package:data_visual_cubeten/screens/chart.dart';
 import 'package:data_visual_cubeten/screens/detail.dart';
 import 'package:data_visual_cubeten/screens/homescreen.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: DetailData.routeName,
           page: () => const DetailData(),
+        ),
+        GetPage(
+          name: ChartScreen.routeName,
+          page: () => const ChartScreen(),
         )
       ],
     );

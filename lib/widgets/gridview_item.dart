@@ -11,9 +11,9 @@ class GridItem extends StatelessWidget {
 
   Color getRandomColor() {
     List<Color> colorList = [
-      Color(0xFFF7E7C2),
-      Color(0xFFF2F2F2),
-      Color(0xFFF6D7A),
+      Color.fromARGB(255, 150, 95, 107),
+      Color.fromARGB(255, 85, 137, 167),
+
       // Add more colors as needed
     ];
 
@@ -37,7 +37,7 @@ class GridItem extends StatelessWidget {
                 children: <Widget>[
                   const Expanded(
                       child: Icon(
-                    FontAwesomeIcons.balanceScaleLeft,
+                    FontAwesomeIcons.chartColumn,
                     size: 17.0,
                   )),
                   Text(
@@ -54,7 +54,7 @@ class GridItem extends StatelessWidget {
                     "Number of cumulatives ${guarantee.numberOfCumulativeSinceInceptionIn2000Till28022023}",
                     style: TextStyle(
                         fontSize: getAdaptiveSize(context, 7),
-                        color: Color.fromARGB(255, 95, 33, 12)),
+                        color: Color.fromARGB(255, 255, 255, 255)),
                   ),
                   SizedBox(
                     height: getAdaptiveSize(context, 10),
@@ -63,7 +63,7 @@ class GridItem extends StatelessWidget {
                     "Amount of cumulatives ${guarantee.amountOfCumulativeSinceInceptionIn2000Till28022023}",
                     style: TextStyle(
                       fontSize: getAdaptiveSize(context, 7),
-                      color: const Color.fromARGB(255, 95, 33, 12),
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
                   ),
                 ],

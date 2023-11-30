@@ -1,5 +1,7 @@
+import 'package:data_visual_cubeten/controller/get_main_controller.dart';
 import 'package:data_visual_cubeten/data/guarantee.dart';
 import 'package:data_visual_cubeten/networking/fetch.dart';
+import 'package:data_visual_cubeten/screens/chart.dart';
 import 'package:data_visual_cubeten/screens/detail.dart';
 import 'package:data_visual_cubeten/utility/utils.dart';
 import 'package:data_visual_cubeten/widgets/gridview_item.dart';
@@ -19,6 +21,8 @@ class HomeScreen extends StatefulHookWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  MainController _mainController = Get.put(MainController());
+
   @override
   Widget build(BuildContext context) {
     final guaranteeList = useQuery(["reponseData"], fetchData);
@@ -73,6 +77,15 @@ class _HomeScreenState extends State<HomeScreen> {
     String title = guaranteeList.data![1];
 
     List<Guarantee> dataList = guaranteeList.data![0];
+    List<Guarantee> dataPassed = [];
+    for (Guarantee ele in dataList) {
+      if (ele.statesUts == "Total") {
+        continue;
+      } else {
+        dataPassed.add(ele);
+      }
+    }
+    _mainController.updateDataList(dataPassed);
 
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, right: 8.0, left: 8.0),
@@ -91,15 +104,25 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Row(
             children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    FontAwesomeIcons.filter,
-                    color: Colors.grey,
-                  )),
-              Text(
-                'Filter',
-                style: TextStyle(color: Colors.grey),
+              const SizedBox(
+                width: 15.0,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(ChartScreen.routeName);
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 9.0),
+                  child: Row(
+                    children: [
+                      Icon(FontAwesomeIcons.chartLine),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text("Chart")
+                    ],
+                  ),
+                ),
               )
             ],
           ),
@@ -116,29 +139,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       return null;
                     }
                     return GestureDetector(
-                        onTap: () {
-                          // Get.toNamed(DetailData.routeName);
+                      onTap: () {
+                        // Get.toNamed(DetailData.routeName);
 
-                          showModalBottomSheet(
-                            isScrollControlled: true,
-                            isDismissible: false,
-                            context: context,
-                            builder: (context) {
-                              List<Guarantee> dataPassed = [];
-                              for (Guarantee ele in dataList) {
-                                if (ele.statesUts == "Total") {
-                                  continue;
-                                } else {
-                                  dataPassed.add(ele);
-                                }
-                              }
-                              return ModalGraph(
-                                chartData: dataPassed,
-                              );
-                            },
-                          );
-                        },
-                        child: GridItem(guarantee: dataList[index]));
+                        showModalBottomSheet(
+                          isScrollControlled: true,
+                          isDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return ModalGraph(
+                              index: index,
+                              guaranteeList: dataList,
+                            );
+                          },
+                        );
+                      },
+                      child: GridItem(guarantee: dataList[index]),
+                    );
                   }))
         ],
       ),
