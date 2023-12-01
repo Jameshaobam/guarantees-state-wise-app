@@ -25,49 +25,71 @@ class GridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     Color randomColor = getRandomColor();
     return Padding(
-      padding: const EdgeInsets.all(0.0),
+      padding: const EdgeInsets.all(5.0),
       child: Card(
-          color: randomColor,
+          color: Colors.white,
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const Expanded(
-                      child: Icon(
-                    FontAwesomeIcons.chartColumn,
-                    size: 17.0,
-                  )),
-                  Text(
-                    "${guarantee.statesUts}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: getAdaptiveSize(context, 15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    width: double.infinity,
+                    color: Color(0xFF67729D),
+                    child: Icon(
+                      FontAwesomeIcons.chartColumn,
+                      size: 17.0,
+                      color: Colors.white,
                     ),
                   ),
-                  SizedBox(
-                    height: getAdaptiveSize(context, 10),
-                  ),
-                  Text(
-                    "Number of cumulatives ${guarantee.numberOfCumulativeSinceInceptionIn2000Till28022023}",
-                    style: TextStyle(
-                        fontSize: getAdaptiveSize(context, 7),
-                        color: Color.fromARGB(255, 255, 255, 255)),
-                  ),
-                  SizedBox(
-                    height: getAdaptiveSize(context, 10),
-                  ),
-                  Text(
-                    "Amount of cumulatives ${guarantee.amountOfCumulativeSinceInceptionIn2000Till28022023}",
-                    style: TextStyle(
-                      fontSize: getAdaptiveSize(context, 7),
-                      color: Color.fromARGB(255, 255, 255, 255),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    width: 150,
+                    child: Text(
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      "${guarantee.statesUts}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: getAdaptiveSize(context, 15),
+                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //   children: [  SizedBox(
+                      //   height: getAdaptiveSize(context, 10),
+                      // ),
+                      Text(
+                        "Number: ${guarantee.numberOfCumulativeSinceInceptionIn2000Till28022023}",
+                        style: TextStyle(
+                            fontSize: getAdaptiveSize(context, 7),
+                            color: Color(0xFF67729D)),
+                      ),
+                      SizedBox(
+                        height: getAdaptiveSize(context, 10),
+                      ),
+                      Text(
+                        "Amount: ${guarantee.amountOfCumulativeSinceInceptionIn2000Till28022023}",
+                        style: TextStyle(
+                          fontSize: getAdaptiveSize(context, 7),
+                          color: Color(0xFF67729D),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           )),
     );

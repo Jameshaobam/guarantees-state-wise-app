@@ -1,6 +1,7 @@
 import 'package:data_visual_cubeten/screens/chart.dart';
 import 'package:data_visual_cubeten/screens/detail.dart';
 import 'package:data_visual_cubeten/screens/homescreen.dart';
+import 'package:data_visual_cubeten/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:fquery/fquery.dart';
 import 'package:get/get.dart';
@@ -28,8 +29,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: HomeScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       getPages: [
+        GetPage(name: SplashScreen.routeName, page: () => const SplashScreen()),
         GetPage(
           name: HomeScreen.routeName,
           page: () => const SafeArea(child: Scaffold(body: HomeScreen())),

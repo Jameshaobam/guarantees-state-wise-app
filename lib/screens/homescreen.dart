@@ -34,21 +34,25 @@ class _HomeScreenState extends State<HomeScreen>
     final guaranteeList = useQuery(["reponseData"], fetchData);
 
     if (guaranteeList.isLoading) {
-      return const Padding(
-        padding: EdgeInsets.all(8.0),
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Center(
-          child: CircularProgressIndicator(),
-        ),
+            child: SizedBox(
+          height: 50,
+          width: 50,
+          child: Image.asset("assets/spinner.gif"),
+        )),
       );
     }
     if (guaranteeList.isFetching) {
-      return const Padding(
-        padding: EdgeInsets.all(8.0),
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Center(
-          child: CircularProgressIndicator(
-            color: Color.fromARGB(255, 85, 137, 167),
-          ),
-        ),
+            child: SizedBox(
+          height: 50,
+          width: 50,
+          child: Image.asset("assets/spinner.gif"),
+        )),
       );
     }
 
@@ -84,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen>
     }
 
     List<Guarantee> dataList = guaranteeList.data![0];
+    String title = guaranteeList.data![1];
     List<Guarantee> dataPassed = [];
     for (Guarantee ele in dataList) {
       if (ele.statesUts == "Total") {
@@ -94,22 +99,32 @@ class _HomeScreenState extends State<HomeScreen>
     }
     _mainController.updateDataList(dataPassed);
 
+    List<Map<String, dynamic>> stateWithIdx = [];
+
+    for (int i = 0; i < dataPassed.length; i++) {
+      stateWithIdx.add({"state": dataPassed[i].statesUts, "idx": i});
+    }
+
+    _mainController.updateStateWithIndexList(stateWithIdx);
+
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, right: 8.0, left: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "States",
+            title,
             style: TextStyle(
                 color: Colors.black,
-                fontSize: getAdaptiveSize(context, 20),
+                fontSize: getAdaptiveSize(context, 9),
                 fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 10.0,
           ),
           TabBar(
+            labelColor: Color(0xFF67729D),
+            indicatorColor: Color(0xFF67729D),
             controller: _tabController,
             tabs: const [
               Tab(

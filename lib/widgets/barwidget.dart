@@ -18,6 +18,7 @@ class BarChartWidget extends StatelessWidget {
     List<Guarantee> dataList = _mainController.dataList.value;
     return Obx(
       () => SfCartesianChart(
+        title: ChartTitle(text: "Bar"),
         onAxisLabelTapped: (AxisLabelTapArgs ax) {
           int index = ax.value.toInt();
 
@@ -47,8 +48,10 @@ class BarChartWidget extends StatelessWidget {
             name: "Number of cumulative",
             spacing: 0.2,
             dataLabelSettings: DataLabelSettings(
+              labelPosition: ChartDataLabelPosition.outside,
               isVisible: _mainController.seeNum.value,
-              textStyle: const TextStyle(fontSize: 7),
+              textStyle: const TextStyle(fontSize: 10),
+              alignment: ChartAlignment.near,
             ),
             dataSource: dataList,
             xValueMapper: (Guarantee gt, _) => gt.statesUts,
@@ -61,15 +64,16 @@ class BarChartWidget extends StatelessWidget {
           BarSeries<Guarantee, String>(
               name: "Amount of cumulative",
               dataLabelSettings: DataLabelSettings(
+                  offset: Offset(3, 0),
                   // offset: const Offset(100, 100),
                   // color: const Color.fromARGB(255, 160, 51, 43),
-                  // labelAlignment: ChartDataLabelAlignment.top,
+                  labelAlignment: ChartDataLabelAlignment.top,
                   isVisible: _mainController.seeAmount.value,
-                  textStyle: const TextStyle(fontSize: 7)),
+                  textStyle: const TextStyle(fontSize: 10)),
               dataSource: dataList,
               xValueMapper: (Guarantee gt, _) => gt.statesUts,
               yValueMapper: (Guarantee gt, _) =>
-                  gt.amountOfCumulativeSinceInceptionIn2000Till28022023)
+                  gt.amountOfCumulativeSinceInceptionIn2000Till28022023),
         ],
         primaryXAxis: CategoryAxis(
             isVisible: _mainController.seeStates.value,
@@ -84,6 +88,7 @@ class BarChartWidget extends StatelessWidget {
           isVisible: true,
           maximum: 760000,
           interval: 300000,
+          edgeLabelPlacement: EdgeLabelPlacement.shift,
           labelIntersectAction: AxisLabelIntersectAction.hide,
           majorGridLines: const MajorGridLines(),
           // title: AxisTitle(

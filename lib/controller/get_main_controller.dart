@@ -27,4 +27,10 @@ class MainController extends GetxController {
   void updateSeeAmount(bool flag) {
     seeAmount.value = flag;
   }
+
+  Rx<List<Map<String, dynamic>>> stateWithIndexList = Rx([]);
+  void updateStateWithIndexList(List<Map<String, dynamic>> data) {
+    stateWithIndexList.value = data;
+    stateWithIndexList.refresh();
+  }
 }
