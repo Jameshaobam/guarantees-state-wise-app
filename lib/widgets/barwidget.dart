@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:data_visual_cubeten/controller/get_main_controller.dart';
 import 'package:data_visual_cubeten/widgets/modalgraph.dart';
 import 'package:flutter/material.dart';
@@ -8,27 +6,21 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../data/guarantee.dart';
 
-class barChartWidget extends StatelessWidget {
-  barChartWidget({
+class BarChartWidget extends StatelessWidget {
+  BarChartWidget({
     super.key,
   });
 
-  MainController _mainController = Get.put(MainController());
-  TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
+  final MainController _mainController = Get.put(MainController());
+  final TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
   @override
   Widget build(BuildContext context) {
     List<Guarantee> dataList = _mainController.dataList.value;
     return Obx(
       () => SfCartesianChart(
         onAxisLabelTapped: (AxisLabelTapArgs ax) {
-          log("${ax.axisName}");
-          log("${ax.value}");
-          log("${ax.text}");
-
           int index = ax.value.toInt();
-          print(dataList[index]);
 
-          print(index);
           showModalBottomSheet(
             isScrollControlled: true,
             isDismissible: false,
@@ -56,7 +48,7 @@ class barChartWidget extends StatelessWidget {
             spacing: 0.2,
             dataLabelSettings: DataLabelSettings(
               isVisible: _mainController.seeNum.value,
-              textStyle: TextStyle(fontSize: 7),
+              textStyle: const TextStyle(fontSize: 7),
             ),
             dataSource: dataList,
             xValueMapper: (Guarantee gt, _) => gt.statesUts,
@@ -73,7 +65,7 @@ class barChartWidget extends StatelessWidget {
                   // color: const Color.fromARGB(255, 160, 51, 43),
                   // labelAlignment: ChartDataLabelAlignment.top,
                   isVisible: _mainController.seeAmount.value,
-                  textStyle: TextStyle(fontSize: 7)),
+                  textStyle: const TextStyle(fontSize: 7)),
               dataSource: dataList,
               xValueMapper: (Guarantee gt, _) => gt.statesUts,
               yValueMapper: (Guarantee gt, _) =>
@@ -87,13 +79,13 @@ class barChartWidget extends StatelessWidget {
             labelIntersectAction: AxisLabelIntersectAction.hide,
             labelPlacement: LabelPlacement.onTicks,
             autoScrollingMode: AutoScrollingMode.start,
-            labelStyle: TextStyle(fontSize: 15, color: Colors.black)),
+            labelStyle: const TextStyle(fontSize: 15, color: Colors.black)),
         primaryYAxis: NumericAxis(
           isVisible: true,
           maximum: 760000,
           interval: 300000,
           labelIntersectAction: AxisLabelIntersectAction.hide,
-          majorGridLines: MajorGridLines(),
+          majorGridLines: const MajorGridLines(),
           // title: AxisTitle(
           //     text:
           //         "amount_of_cumulative_since_inception_in_2000_till_28_02_2023"),

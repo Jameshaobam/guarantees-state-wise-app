@@ -1,6 +1,5 @@
 import 'package:data_visual_cubeten/controller/get_main_controller.dart';
 import 'package:data_visual_cubeten/widgets/barwidget.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -91,33 +90,45 @@ class _ChartScreenState extends State<ChartScreen> {
             // ignore: prefer_const_constructors
             Row(
               children: const [
-                Icon(
-                  FontAwesomeIcons.solidCircle,
-                  size: 15.0,
-                  color: Color.fromARGB(255, 209, 110, 103),
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Text(
-                  "Amount of cummulative",
-                  style: TextStyle(fontSize: 10.0),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.solidCircle,
+                        size: 15.0,
+                        color: Color.fromARGB(255, 209, 110, 103),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        "Amount of cumulative",
+                        style: TextStyle(fontSize: 10.0),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   width: 10.0,
                 ),
-                Icon(
-                  size: 15.0,
-                  FontAwesomeIcons.solidCircle,
-                  color: Colors.blue,
+                Expanded(
+                  child: Row(
+                    children: [
+                      Icon(
+                        size: 15.0,
+                        FontAwesomeIcons.solidCircle,
+                        color: Colors.blue,
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        "Number of cumulative",
+                        style: TextStyle(fontSize: 10.0),
+                      )
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Text(
-                  "Number of cummulative",
-                  style: TextStyle(fontSize: 10.0),
-                )
               ],
             ),
             const SizedBox(
@@ -126,7 +137,7 @@ class _ChartScreenState extends State<ChartScreen> {
 
             Row(
               children: [
-                Text("Graph size:"),
+                const Text("Graph size:"),
                 TextButton(
                     onPressed: () {
                       gSize.value = "S";
@@ -169,7 +180,7 @@ class _ChartScreenState extends State<ChartScreen> {
                     SizedBox(
                       width: double.infinity,
                       height: sizeMap[gSize.value],
-                      child: barChartWidget(),
+                      child: BarChartWidget(),
                     )
                   ],
                 ),

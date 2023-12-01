@@ -2,10 +2,8 @@ import 'package:data_visual_cubeten/controller/get_main_controller.dart';
 import 'package:data_visual_cubeten/data/guarantee.dart';
 import 'package:data_visual_cubeten/networking/fetch.dart';
 import 'package:data_visual_cubeten/screens/chart.dart';
-import 'package:data_visual_cubeten/screens/detail.dart';
 import 'package:data_visual_cubeten/utility/utils.dart';
-import 'package:data_visual_cubeten/widgets/gridview_item.dart';
-import 'package:data_visual_cubeten/widgets/modalgraph.dart';
+import '../widgets/datawidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,8 +18,16 @@ class HomeScreen extends StatefulHookWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  MainController _mainController = Get.put(MainController());
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  final MainController _mainController = Get.put(MainController());
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
       return const Padding(
         padding: EdgeInsets.all(8.0),
         child: Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            color: Color.fromARGB(255, 85, 137, 167),
+          ),
         ),
       );
     }
@@ -74,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
-    String title = guaranteeList.data![1];
 
     List<Guarantee> dataList = guaranteeList.data![0];
     List<Guarantee> dataPassed = [];
@@ -102,61 +109,59 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 10.0,
           ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 15.0,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Get.toNamed(ChartScreen.routeName);
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 9.0),
-                  child: Row(
-                    children: [
-                      Icon(FontAwesomeIcons.chartLine),
-                      SizedBox(
-                        width: 5.0,
+          TabBar(
+            controller: _tabController,
+            tabs: const [
+              Tab(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 15.0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 9.0),
+                      child: Row(
+                        children: [
+                          Icon(FontAwesomeIcons.chartLine),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text("Chart")
+                        ],
                       ),
-                      Text("Chart")
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              )
+              ),
+              Tab(
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 9.0),
+                      child: Row(
+                        children: [
+                          Icon(FontAwesomeIcons.chartLine),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text("Data")
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           Expanded(
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Number of columns in the grid
-                    crossAxisSpacing: 8.0, // Spacing between columns
-                    mainAxisSpacing: 8.0, // Spacing between rows
-                  ),
-                  itemCount: dataList.length,
-                  itemBuilder: (context, index) {
-                    if (dataList[index].srNo == "Total") {
-                      return null;
-                    }
-                    return GestureDetector(
-                      onTap: () {
-                        // Get.toNamed(DetailData.routeName);
-
-                        showModalBottomSheet(
-                          isScrollControlled: true,
-                          isDismissible: false,
-                          context: context,
-                          builder: (context) {
-                            return ModalGraph(
-                              index: index,
-                              guaranteeList: dataList,
-                            );
-                          },
-                        );
-                      },
-                      child: GridItem(guarantee: dataList[index]),
-                    );
-                  }))
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                const ChartScreen(),
+                DataWidget(dataList: dataList),
+              ],
+            ),
+          )
         ],
       ),
     );

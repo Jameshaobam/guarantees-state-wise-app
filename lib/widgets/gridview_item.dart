@@ -11,8 +11,8 @@ class GridItem extends StatelessWidget {
 
   Color getRandomColor() {
     List<Color> colorList = [
-      Color.fromARGB(255, 150, 95, 107),
-      Color.fromARGB(255, 85, 137, 167),
+      const Color.fromARGB(255, 150, 95, 107),
+      const Color.fromARGB(255, 85, 137, 167),
 
       // Add more colors as needed
     ];

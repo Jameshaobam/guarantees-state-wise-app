@@ -4,7 +4,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class PieChartWidget extends StatelessWidget {
   PieChartWidget({super.key, required this.guarantee});
-  TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
+  final TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
   final Guarantee guarantee;
 
   @override
