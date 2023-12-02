@@ -1,7 +1,6 @@
 import 'package:data_visual_cubeten/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

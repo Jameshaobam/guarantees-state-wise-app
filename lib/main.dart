@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 void main() {
   var queryClient = QueryClient();
+
   runApp(
     QueryClientProvider(
       queryClient: queryClient,
